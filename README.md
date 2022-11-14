@@ -6,3 +6,4 @@ That cryptographic hash is then encrypted using the sender's private key. The cr
 The recipient can decrypt the encrypted hash with the sender's public key certificate. A cryptographic hash is again generated on the recipient's end.
 Both cryptographic hashes are compared to check its authenticity. If they match, the document hasn't been tampered with and is considered valid.
 If the integrity of the original file is found to be compromised, it will fetch and replace it with the latest backup, and vice versa for the backup file.
+## asd
