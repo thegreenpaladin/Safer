@@ -1,30 +1,29 @@
 #!/usr/bin/python
 import tkinter as tk
 
+
 # A popup GUI window to edit text
-def save():
-    with open('test.txt', 'w') as f:
-        f.write(textBox.get(1.0, tk.END))
-        f.close()
+class EditDocument:
+    
+    def __init__(self, fileContent):
+        self.window = tk.Tk()
+        self.window.title("Edit File")
+        self.window.geometry("500x500")
+        self.textBox = tk.Text(self.window)
+        self.textBox.insert(tk.INSERT, fileContent)
+        self.textBox.pack()
 
-def cancel():
-    exit()
+        self.button = tk.Button(self.window, text="Save", width=10, bg='gray', bd=3, command=lambda: self.save())
+        self.button2 = tk.Button(self.window, text="Canel", width=10, bg='gray', bd=3, command=lambda: self.cancel())
+        self.button.pack()
+        self.button2.pack()
 
-def getFileText():
-    #Get the data from the file here
-    return "This is a test"
+        self.window.mainloop()
+        
+    def save(self):
+        with open('test.txt', 'w') as f:
+            f.write(self.textBox.get(1.0, tk.END))
+            f.close()
 
-window = tk.Tk()
-window.title("Edit File")
-window.geometry("500x500")
-
-textBox = tk.Text(window)
-textBox.insert(tk.INSERT, getFileText()) # We can also read and display a file in the text box here
-textBox.pack()
-
-button = tk.Button(window, text="Save", width=10, bg='gray', bd=3, command=lambda: save())
-button2 = tk.Button(window, text="Canel", width=10, bg='gray', bd=3, command=lambda: cancel())
-button.pack()
-button2.pack()
-
-window.mainloop()
+    def cancel(self):
+        exit()
