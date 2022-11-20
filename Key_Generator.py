@@ -23,6 +23,8 @@ if os.path.isdir('keys') and len(os.listdir('keys'))!=0:
 
 with open('keys/privatekey.txt', 'wb') as f:
     f.write(private_key)
+    f.close()
 with open('keys/publickey.txt', 'wb') as f:
     f.write(public_key)
+    f.close()
 os.chmod('keys/privatekey.txt', 0o600)
