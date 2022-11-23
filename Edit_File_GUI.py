@@ -14,7 +14,7 @@ class EditDocument:
         self.textBox.pack()
 
         self.button = tk.Button(self.window, text="Save", width=10, bg='gray', bd=3, command=lambda: self.save())
-        self.button2 = tk.Button(self.window, text="Canel", width=10, bg='gray', bd=3, command=lambda: self.cancel())
+        self.button2 = tk.Button(self.window, text="Cancel", width=10, bg='gray', bd=3, command=lambda: self.cancel())
         self.button.pack()
         self.button2.pack()
 
