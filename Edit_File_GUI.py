@@ -1,8 +1,7 @@
-#!/usr/bin/python
 import tkinter as tk
 
+# A GUI window to edit text
 
-# A popup GUI window to edit text
 class EditDocument:
     
     def __init__(self, fileContent):
@@ -21,7 +20,7 @@ class EditDocument:
         self.window.mainloop()
         
     def save(self):
-        with open('test.txt', 'w') as f:
+        with open('message.txt', 'w') as f:
             f.write(self.textBox.get(1.0, tk.END))
             f.close()
 
