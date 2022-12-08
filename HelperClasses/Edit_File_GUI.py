@@ -1,6 +1,5 @@
 import tkinter as tk
-from FileIO import FileIO
-from tkinter import messagebox
+from HelperClasses.FileIO import FileIO
 # A GUI window to edit text
 
 class EditDocument:
@@ -22,8 +21,7 @@ class EditDocument:
 
         self.window.mainloop()
         
-        
-        
+
     def save(self):
         FileHandler=FileIO()
         lenOfPrevContent = len(self.fileContents)
@@ -34,6 +32,5 @@ class EditDocument:
         else:
             FileHandler.writeFile('data/message.txt', curText)
             
-
     def exit(self):
         self.window.destroy()

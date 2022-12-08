@@ -1,10 +1,11 @@
 from ecdsa import SigningKey
-from Edit_File_GUI import EditDocument
+from HelperClasses.Edit_File_GUI import EditDocument
+from HelperClasses.FileIO import FileIO
 from tkinter import messagebox
 from tkinter.messagebox import askyesno
 import time, os
 import emoji
-from FileIO import FileIO
+
 
 FileHandler=FileIO()
 message = FileHandler.readFile('data/message.txt')

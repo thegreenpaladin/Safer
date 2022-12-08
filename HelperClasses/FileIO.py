@@ -1,5 +1,6 @@
-from ecdsa import SigningKey, VerifyingKey, BadSignatureError
+from ecdsa import SigningKey, VerifyingKey
 import shutil
+
 class FileIO:
     def __init__(self):
         pass
