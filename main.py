@@ -35,7 +35,6 @@ else:
     sk=FileHandler.readSigningKey('keys/private.pem')
     vk=FileHandler.readVerifyingKey('keys/public.pem')
     try:
-        print(len(signature))
         vk.verify(signature, message.encode('utf-8'))
         answer = askyesno(title='Integrity Verified!',
                     message='Signature is valid!\nThis file was last modified on: '+ time.ctime(os.path.getmtime('data/message.txt'))+'\nDo you want to edit the file?')
