@@ -1,70 +1,53 @@
-from ecdsa import SigningKey, VerifyingKey, BadSignatureError
+from ecdsa import SigningKey
 from Edit_File_GUI import EditDocument
-import shutil
+from tkinter import messagebox
+from tkinter.messagebox import askyesno
+import time, os
+import emoji
+from FileIO import FileIO
 
-message = ''
+FileHandler=FileIO()
+message = FileHandler.readFile('data/message.txt')
+signature = FileHandler.readFile('signature/signature.txt')
 
-def readFile(fileName):
-    data = ''
-    if fileName == 'signature/signature.txt':
-        with open(fileName, 'rb') as f:
-            data = f.read()
-            f.close()
-    else:
-        with open(fileName, 'r') as f:
-            data = f.read()
-            f.close()
-    return data
+def firstTimeProgramExecution():
+        if message == '' and signature == b'':
+            return True
+        else:
+            return False
 
-def writeFile(fileName, data):
-    with open(fileName, 'wb') as f:
-        f.write(data)
-        f.close()
+messagebox.showinfo('IS Project', ' Welcome to File Integrity Verification System and Backup System. \U0001F606\U0001F606\U0001F606')
 
-def isFileEmpty():
-    if message == '' and signature == b'':
-        return True
-    else:
-        return False
-
-message = readFile('message.txt')
-signature = readFile('signature/signature.txt')
-
-print('File Verification Program\n')
-
-if isFileEmpty():
+if firstTimeProgramExecution():
     sk = SigningKey.generate() # uses NIST192p
     vk = sk.verifying_key
-    with open("private.pem", "wb") as f:
-        f.write(sk.to_pem())
-    with open("public.pem", "wb") as f:
-        f.write(vk.to_pem())
-    print('The file is empty. Please enter some text to save and sign the file.')
-    editDoc = EditDocument(message)
-    message = readFile('message.txt')
+    FileHandler.writeKey('keys/private.pem', sk)
+    FileHandler.writeKey('keys/public.pem', vk)
+    messagebox.showinfo("First Time", "A new file has just been created. Add any text you like.")
+    editDoc = EditDocument('')
+    message = FileHandler.readFile('data/message.txt')
     signature = sk.sign(message.encode('utf-8'))
-    print('Signature: ', signature)
-    with open('signature/signature.txt','wb') as f:
-        f.write(signature)
-    shutil.copy2('message.txt', 'backup/msg_backup.txt')
-    print('The file has been signed and saved.')
+    FileHandler.writeFile('signature/signature.txt', signature)
+    FileHandler.createBackup()
+    messagebox.showinfo('Saved and Backed up','The file has been signed and saved. And a backup has been created.'+emoji.emojize(":winking_face_with_tongue:")+''+emoji.emojize(":winking_face_with_tongue:")+''+emoji.emojize(":winking_face_with_tongue:"))
 else:
-    sk='hehe'
-    vk='huhu'
-    with open("private.pem") as f:
-        sk = SigningKey.from_pem(f.read())
-    vk = VerifyingKey.from_pem(open("public.pem").read())
+    sk=FileHandler.readSigningKey('keys/private.pem')
+    vk=FileHandler.readVerifyingKey('keys/public.pem')
     try:
         vk.verify(signature, message.encode('utf-8'))
-        print('Signature is valid')
-        ch = input('Do you want to edit the file? (y/n): ')
-        if ch == 'y':
+        answer = askyesno(title='Integrity Verified!',
+                    message='Signature is valid!\nThis file was last modified on: '+ time.ctime(os.path.getmtime('data/message.txt'))+'\nDo you want to edit the file?')
+        if answer:
             editDoc = EditDocument(message)
-            message = readFile('message.txt')
+            message = FileHandler.readFile('data/message.txt')
             signature = sk.sign(message.encode('utf-8'))
-            writeFile('signature/signature.txt', signature)
-            shutil.copy2('message.txt', 'backup/msg_backup.txt')
-            print('The file has been signed and saved.')
+            FileHandler.writeFile('signature/signature.txt', signature)
+            FileHandler.createBackup()
+            messagebox.showinfo('Saved and Backed up','The file has been signed and saved. And a backup has been created.'+emoji.emojize(":winking_face_with_tongue:")+''+emoji.emojize(":winking_face_with_tongue:")+''+emoji.emojize(":winking_face_with_tongue:"))
+        else:
+            messagebox.showinfo('Program Terminating','Terminating Program.')
     except:
-        print('Signature is invalid. The file contents were tampered. The backup will replace the current version of the file.')
-        shutil.copy2('backup/msg_backup.txt', 'message.txt')
+        FileHandler.replaceWithBackup()
+        backUpFileModificationTime= time.ctime(os.path.getmtime('backup/msg_backup.txt'))
+        messagebox.showinfo('Oops! Invalid Signature','Signature is invalid. The file contents were tampered. The current version of the file has been replaced by backup created on:'+backUpFileModificationTime)
+        
