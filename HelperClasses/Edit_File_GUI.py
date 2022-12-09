@@ -29,6 +29,7 @@ class EditDocument:
         
         if(curText[0:lenOfPrevContent]==self.fileContents) and len(curText[lenOfPrevContent:])>0:
             FileHandler.appendToFile('data/message.txt', curText[lenOfPrevContent:])
+            print("appended")
         else:
             FileHandler.writeFile('data/message.txt', curText)
             

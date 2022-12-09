@@ -8,6 +8,7 @@ import emoji
 
 
 FileHandler=FileIO()
+
 message = FileHandler.readFile('data/message.txt')
 signature = FileHandler.readFile('signature/signature.txt')
 
@@ -20,8 +21,8 @@ def firstTimeProgramExecution():
 messagebox.showinfo('IS Project', ' Welcome to File Integrity Verification System and Backup System. \U0001F606\U0001F606\U0001F606')
 
 if firstTimeProgramExecution():
-    sk = SigningKey.generate() # uses NIST192p
-    vk = sk.verifying_key
+    sk = SigningKey.generate() # uses NIST192p #Private Key
+    vk = sk.verifying_key      #Public Key
     FileHandler.writeKey('keys/private.pem', sk)
     FileHandler.writeKey('keys/public.pem', vk)
     messagebox.showinfo("First Time", "A new file has just been created. Add any text you like.")

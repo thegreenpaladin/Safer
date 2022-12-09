@@ -4,7 +4,7 @@ The idea incorporates the implementation of Digital Signatures and Hashing to ve
 ## 1)Digital Signatures
 Using a mathematical algorithm, we will generate two keys: a public key and a private key. When a signer digitally signs the file, a cryptographic hash is generated for the document.
 ## 2)Hashing
-That cryptographic hash is then encrypted using the sender's private key. The cryptographic hash is then appended to the document and sent to the recipients along with the sender's public key.
+That cryptographic hash is then encrypted using the sender's private key. The cryptographic hash can then be used to verify the integrity of the file using the sender's public key and see if it was tampered with.
 ## 3)Decryption
 The recipient can decrypt the encrypted hash with the sender's public key certificate. A cryptographic hash is again generated on the recipient's end.
 ## 4)Verification
