@@ -1,5 +1,5 @@
 # Information Security Project
-The idea incorporates the implementation of Digital Signatures and Hashing to verify the integrity of files, it will also involve a backup file generation feature, and its replacement in case of compromise of integrity.
+The idea incorporates the implementation of Digital Signatures and Hashing to verify the integrity of files, it will also involve a backup file generation feature, and its replacement in case of a compromise of integrity.
 # Project Implementation Method
 ## 1)Digital Signatures
 Using a mathematical algorithm, we will generate two keys: a public key and a private key. When a signer digitally signs the file, a cryptographic hash is generated for the document.
